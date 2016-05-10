@@ -25,7 +25,7 @@ local function logadd(msg)
 	end
 	data[tostring(GBan_log)][tostring(msg.to.id)] = msg.to.peer_id
 	save_data(_config.moderation.data, data)
-	local text = 'Log_SuperGroup has has been set!'
+	local text = 'Log SuperGroup has has been set!'
 	reply_msg(msg.id,text,ok_cb,false)
 	return
 end
@@ -41,7 +41,7 @@ local function logrem(msg)
 	end
 	data[tostring(GBan_log)][tostring(msg.to.id)] = nil
 	save_data(_config.moderation.data, data)
-	local text = 'Log_SuperGroup has has been removed!'
+	local text = 'Log SuperGroup has has been removed!'
 	reply_msg(msg.id,text,ok_cb,false)
 	return
 end
@@ -153,7 +153,7 @@ end
 local function run(msg,matches)
     local receiver = get_receiver(msg)
     local group = msg.to.id
-	local print_name = user_print_name(msg.from):gsub("‮", "")
+	local print_name = user_print_name(msg.from):gsub("â€®", "")
 	local name_log = print_name:gsub("_", " ")
     if not is_admin1(msg) then
     	return 
@@ -181,11 +181,9 @@ local function run(msg,matches)
     	return
     end
     if matches[1] == "pm" then
-    	local text = "Message From "..(msg.from.username or msg.from.last_name).."\n\nMessage : "..matches[3]
-    	send_large_msg("user#id"..matches[2],text)
-    	return "Message has been sent"
+    	send_large_msg("user#id"..matches[2],matches[3])
+    	return "Massage has been sent"
     end
-    
     if matches[1] == "pmblock" then
     	if is_admin2(matches[2]) then
     		return "You can't block admins"
@@ -215,29 +213,6 @@ local function run(msg,matches)
       del_contact("user#id"..matches[2],ok_cb,false)
       return "User "..matches[2].." removed from contact list"
     end
-    if matches[1] == "addcontact" and is_sudo(msg) then
-    phone = matches[2]
-    first_name = matches[3]
-    last_name = matches[4]
-    add_contact(phone, first_name, last_name, ok_cb, false)
-   return "User With Phone +"..matches[2].." has been added"
-end
- if matches[1] == "sendcontact" and is_sudo(msg) then
-    phone = matches[2]
-    first_name = matches[3]
-    last_name = matches[4]
-    send_contact(get_receiver(msg), phone, first_name, last_name, ok_cb, false)
-end
- if matches[1] == "mycontact" and is_sudo(msg) then
-	if not msg.from.phone then
-		return "I must Have Your Phone Number!"
-    end
-    phone = msg.from.phone
-    first_name = (msg.from.first_name or msg.from.phone)
-    last_name = (msg.from.last_name or msg.from.id)
-    send_contact(get_receiver(msg), phone, first_name, last_name, ok_cb, false)
-end
-
     if matches[1] == "dialoglist" then
       get_dialog_list(get_dialog_list_callback, {target = msg.from.id})
       return "I've sent a group dialog list with both json and text format to your private messages"
@@ -262,7 +237,7 @@ end
 		receiver = get_receiver(msg)
 		reload_plugins(true)
 		post_msg(receiver, "Reloaded!", ok_cb, false)
-		return "Reloaded!"
+		return "Reloaded WaderTG-API All Plugins !"
 	end
 	--[[*For Debug*
 	if matches[1] == "vardumpmsg" and is_admin1(msg) then
@@ -275,23 +250,23 @@ end
 		if not long_id then
 			data[tostring(msg.to.id)]['long_id'] = msg.to.peer_id 
 			save_data(_config.moderation.data, data)
-			return "Updated ID"
+			return "Updated ID WaderTG"
 		end
 	end
 	if matches[1] == 'addlog' and not matches[2] then
 		if is_log_group(msg) then
-			return "Already a Log_SuperGroup"
+			return "Already a Log SuperGroup"
 		end
-		print("Log_SuperGroup "..msg.to.title.."("..msg.to.id..") added")
-		savelog(msg.to.id, name_log.." ["..msg.from.id.."] added Log_SuperGroup")
+		print("Log SuperGroup "..msg.to.title.."("..msg.to.id..") added")
+		savelog(msg.to.id, name_log.." ["..msg.from.id.."] added Log SuperGroup")
 		logadd(msg)
 	end
 	if matches[1] == 'remlog' and not matches[2] then
 		if not is_log_group(msg) then
-			return "Not a Log_SuperGroup"
+			return "Not a Log SuperGroup"
 		end
-		print("Log_SuperGroup "..msg.to.title.."("..msg.to.id..") removed")
-		savelog(msg.to.id, name_log.." ["..msg.from.id.."] added Log_SuperGroup")
+		print("Log SuperGroup "..msg.to.title.."("..msg.to.id..") removed")
+		savelog(msg.to.id, name_log.." ["..msg.from.id.."] added Log SuperGroup")
 		logrem(msg)
 	end
     return
@@ -316,9 +291,6 @@ return {
 	"^[#!/](contactlist)$",
 	"^[#!/](dialoglist)$",
 	"^[#!/](delcontact) (%d+)$",
-	"^[#!/](addcontact) (.*) (.*) (.*)$", 
-	"^[#!/](sendcontact) (.*) (.*) (.*)$",
-	"^[#!/](mycontact)$",
 	"^[#/!](reload)$",
 	"^[#/!](updateid)$",
 	"^[#/!](addlog)$",
