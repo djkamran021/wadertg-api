@@ -31,6 +31,7 @@ return {
   patterns = {
 	"^[!/#](tophoto)$",
 	"%[(document)%]",
+	"^[!/#]([Ss]2[Pp]) (.+)$"
   },
   run = run,
 }
