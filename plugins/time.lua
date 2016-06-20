@@ -2,8 +2,8 @@
 #
 #    Time And Date
 #
-#    @WaderTGTeam
-# @WaderTGTeam
+#    @kamranya
+# 
 #
 #
 ]]
@@ -17,5 +17,7 @@ return text
 end
 return {
   patterns = {"^[#/!]([Tt][iI][Mm][Ee])$"}, 
+  "^(time)$",
+  "^(ساعت)$"
 run = run 
 }
