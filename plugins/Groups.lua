@@ -10,7 +10,7 @@ local function chat_list(msg)
         if not data[tostring(groups)] then
                 return 'No groups at the moment'
         end
-        local message = 'List Groups WaderTG-API:\n*Use #join [ID-CHAT] to join\n*Use #link [ID-CHAT] send link chat\n\n '
+        local message = 'List Groups PowerFull-API:\n*Use #join [ID-CHAT] to join\n*Use #link [ID-CHAT] send link chat\n\n '
         for k,v in pairs(data[tostring(groups)]) do
                 local settings = data[tostring(v)]['settings']
                 for m,n in pairsByKeys(settings) do
@@ -68,7 +68,8 @@ local function run(msg, matches)
 return {
     description = "See link of a group and groups list",
     usage = "!link ID && !groups",
-patterns = {"^[!#/]([Ll]ink) (.*)$","^[!#/]([Gg]roups)$"},
+patterns = {"^[!#/]([Ll]ink) (.*)$",
+    "^[!#/]([Gg]roups)$"},
 run = run
 } '
         for k,v in pairs(data[tostring(groups)]) do
@@ -106,7 +107,7 @@ local function run(msg, matches)
       chat_add_user(chat_id, user_id, ok_cb, false)   
    local group_link = data[tostring(matches[2])]['settings']['set_link']
    local group_name = data[tostring(matches[2])]['settings']['set_name']
-   return "Group Link:\n"..group_link.."\n\n(Group name:"..group_name..")\nCreate by:@WaderTGTeam"
+   return "Group Link:\n"..group_link.."\n\n(Group name:"..group_name..")\nCreate by:@kamranya"
    
     elseif matches[1] == 'link' and not data[tostring(matches[2])] then
 
@@ -128,6 +129,7 @@ local function run(msg, matches)
 return {
     description = "See link of a group and groups list",
     usage = "!link ID && !groups",
-patterns = {"^[!#/]([Ll]ink) (.*)$","^[!#/]([Gg]roups)$"},
+patterns = {"^[!#/]([Ll]ink) (.*)$",
+    "^[!#/]([Gg]roups)$"},
 run = run
 }
